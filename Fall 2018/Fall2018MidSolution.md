@@ -1,45 +1,64 @@
 ---
 title: "Fall 2018 Mid Term Solution"
-author: "Chen Wang"
+author: 
+  - Chen Wang^[Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (chenw23@uci.edu)]
 date: "11/8/2019"
 output:
+
   html_document:
     keep_md: yes
-  pdf_document:
-    toc: true
-    toc_depth: 3
-    number_sections: true
-    keep_tex: true
   word_document: default
 ---
 
 
 
-## R Markdown
+# OS Interfaces
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+***This question is not covered in this midterm***
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Basic page tables
 
+## (5 points)  Draw page table structure
 
-```r
-summary(cars)
-```
+Alice wants to construct a page table that maps virtual addresses 0x0, 0x1000and 0x2000 into physical addresses 0x1000, 0x2000, and 0x3000.  Assume that the Page Directory Page is at physical address 0x0, and the Page Table Page is at physical address0x00001000 (which is PPN 0x00001).
 
-```
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-```
+Draw a picture of the page table Alice will construct (or alternatively simply write it down in the format similar to the one below):  
 
-## Including Plots
+Page Directory Page:
 
-You can also embed plots, for example:
+`PDE 0: PPN=0x1, PTE_P, PTE_U, PTE_W`
 
-![](Fall2018MidSolution_files/figure-html/pressure-1.png)<!-- -->
+...  all other PDEs are zero
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The Page Table Page:
+
+`PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W`
+
+`PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W`
+
+`PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W`
+
+...  all other PTEs are zero
+
+***Reference Solution:***
+
+Page Directory Page:
+
+`PDE 0: PPN=0x1, PTE_P, PTE_U, PTE_W`
+
+...  all other PDEs are zero
+
+The Page Table Page:
+
+`PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W`
+
+`PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W`
+
+`PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W`
+
+...  all other PTEs are zero
+
+# Stack and calling conventions
+
+Alice developed a program that has a function `foo()` that is called from two other functions `bar()` and `baz()`:
+`int foo(int a) {`

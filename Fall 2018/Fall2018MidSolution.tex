@@ -1,0 +1,160 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Fall 2018 Mid Term Solution},
+            pdfauthor={Chen Wang},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Fall 2018 Mid Term Solution}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Chen Wang\footnote{Undergraduate in Computer Engineering, Samueli School
+  of Engineering, University of California, Irvine.
+  (\href{mailto:chenw23@uci.edu}{\nolinkurl{chenw23@uci.edu}})}}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{11/8/2019}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{os-interfaces}{%
+\section{OS Interfaces}\label{os-interfaces}}
+
+\textbf{\emph{This question is not covered in this midterm}}
+
+\hypertarget{basic-page-tables}{%
+\section{Basic page tables}\label{basic-page-tables}}
+
+\hypertarget{points-draw-page-table-structure}{%
+\subsection{(5 points) Draw page table
+structure}\label{points-draw-page-table-structure}}
+
+Alice wants to construct a page table that maps virtual addresses 0x0,
+0x1000and 0x2000 into physical addresses 0x1000, 0x2000, and 0x3000.
+Assume that the Page Directory Page is at physical address 0x0, and the
+Page Table Page is at physical address0x00001000 (which is PPN 0x00001).
+
+Draw a picture of the page table Alice will construct (or alternatively
+simply write it down in the format similar to the one below):
+
+Page Directory Page:
+
+\texttt{PDE\ 0:\ PPN=0x1,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\ldots{} all other PDEs are zero
+
+The Page Table Page:
+
+\texttt{PTE\ 0:\ PPN=0x1,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\texttt{PTE\ 1:\ PPN=0x2,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\texttt{PTE\ 2:\ PPN=0x3,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\ldots{} all other PTEs are zero
+
+\textbf{\emph{Reference Solution:}}
+
+Page Directory Page:
+
+\texttt{PDE\ 0:\ PPN=0x1,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\ldots{} all other PDEs are zero
+
+The Page Table Page:
+
+\texttt{PTE\ 0:\ PPN=0x1,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\texttt{PTE\ 1:\ PPN=0x2,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\texttt{PTE\ 2:\ PPN=0x3,\ PTE\_P,\ PTE\_U,\ PTE\_W}
+
+\ldots{} all other PTEs are zero
+
+\hypertarget{stack-and-calling-conventions}{%
+\section{Stack and calling
+conventions}\label{stack-and-calling-conventions}}
+
+Alice developed a program that has a function \texttt{foo()} that is
+called from two other functions \texttt{bar()} and \texttt{baz()}:
+\texttt{int\ foo(int\ a)\ \{}
+
+
+\end{document}

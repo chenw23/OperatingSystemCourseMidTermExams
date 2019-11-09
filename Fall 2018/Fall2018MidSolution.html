@@ -363,30 +363,50 @@ summary {
 
 
 <h1 class="title toc-ignore">Fall 2018 Mid Term Solution</h1>
-<h4 class="author">Chen Wang</h4>
+<h4 class="author">Chen Wang<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h4>
 <h4 class="date">11/8/2019</h4>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="os-interfaces" class="section level1">
+<h1>OS Interfaces</h1>
+<p><strong><em>This question is not covered in this midterm</em></strong></p>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="basic-page-tables" class="section level1">
+<h1>Basic page tables</h1>
+<div id="points-draw-page-table-structure" class="section level2">
+<h2>(5 points) Draw page table structure</h2>
+<p>Alice wants to construct a page table that maps virtual addresses 0x0, 0x1000and 0x2000 into physical addresses 0x1000, 0x2000, and 0x3000. Assume that the Page Directory Page is at physical address 0x0, and the Page Table Page is at physical address0x00001000 (which is PPN 0x00001).</p>
+<p>Draw a picture of the page table Alice will construct (or alternatively simply write it down in the format similar to the one below):</p>
+<p>Page Directory Page:</p>
+<p><code>PDE 0: PPN=0x1, PTE_P, PTE_U, PTE_W</code></p>
+<p>… all other PDEs are zero</p>
+<p>The Page Table Page:</p>
+<p><code>PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W</code></p>
+<p><code>PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W</code></p>
+<p><code>PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W</code></p>
+<p>… all other PTEs are zero</p>
+<p><strong><em>Reference Solution:</em></strong></p>
+<p>Page Directory Page:</p>
+<p><code>PDE 0: PPN=0x1, PTE_P, PTE_U, PTE_W</code></p>
+<p>… all other PDEs are zero</p>
+<p>The Page Table Page:</p>
+<p><code>PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W</code></p>
+<p><code>PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W</code></p>
+<p><code>PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W</code></p>
+<p>… all other PTEs are zero</p>
+</div>
+</div>
+<div id="stack-and-calling-conventions" class="section level1">
+<h1>Stack and calling conventions</h1>
+<p>Alice developed a program that has a function <code>foo()</code> that is called from two other functions <code>bar()</code> and <code>baz()</code>: <code>int foo(int a) {</code></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (<a href="mailto:chenw23@uci.edu" class="email">chenw23@uci.edu</a>)<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
 
 

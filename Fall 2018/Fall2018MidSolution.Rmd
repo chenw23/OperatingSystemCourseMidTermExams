@@ -4,8 +4,13 @@ author:
   - Chen Wang^[Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (chenw23@uci.edu)]
 date: "11/8/2019"
 output:
-
-
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    keep_tex: true
+  html_document:
+    keep_md: yes
   word_document: default
 ---
 
@@ -32,13 +37,11 @@ Page Directory Page:
 ...  all other PDEs are zero
 
 The Page Table Page:
-
-`PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W`
-
-`PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W`
-
-`PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W`
-
+```
+PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W
+PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W
+PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W
+```
 ...  all other PTEs are zero
 
 ***Reference Solution:***
@@ -50,16 +53,112 @@ Page Directory Page:
 ...  all other PDEs are zero
 
 The Page Table Page:
-
-`PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W`
-
-`PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W`
-
-`PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W`
-
+```
+PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W
+PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W
+PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W
+```
 ...  all other PTEs are zero
 
 # Stack and calling conventions
 
 Alice developed a program that has a function `foo()` that is called from two other functions `bar()` and `baz()`:
-`int foo(int a) {`
+```
+int foo(int a) {
+  ...
+}
+
+int bar(int a, int b) 
+  ...
+  foo(x);
+  printf("bar:%d\n", x);
+  ...
+}
+
+int baz(int a, int b, int c) {
+  ...
+  foo(x);
+  printf("baz:%d\n", x);
+  ...
+}
+```
+While debugging her program Alice observes the following state when she hits a breakpoint of the program inside `foo()` (assume that the compiler does not inline invocations of `foo()`, `bar()`, and `baz()`, and follows the calling conventions that we’ve covered in the class)
+
+```
+The bottom of the stack:
+
+0x8010b5b4: ...
+0x8010b5b0: 0x00000003
+0x8010b5ac: 0x00000002
+0x8010b5a8  0x80102e80
+0x8010b5a4: 0x8010b5b4
+0x8010b5a0: 0x80112780
+0x8010b59c: 0x00000001
+0x8010b598: 0x80102e32
+0x8010b594: 0x8010b5a4    <-- ebp
+0x8010b590: 0x00000000    <-- esp
+```
+## Explain Stack
+
+(a)  (5 points)  Provide  a  short  explanation  for  each  line  of  the  stack  dump  above  (you  canannotate the printout above).
+
+***Reference Solution***
+
+```
+The bottom of the stack:
+
+0x8010b5b4: ...        // ebp
+0x8010b5b0: 0x00000003 // argument #2 to the function that called foo()’s caller
+0x8010b5ac: 0x00000002 // argument #1 to the function that called foo()’s caller
+0x8010b5a8  0x80102e80 // return address
+0x8010b5a4: 0x8010b5b4 // ebp
+0x8010b5a0: 0x80112780 // (local variable, argument to a funciton, or register
+                          spill inside function that called foo)
+0x8010b59c: 0x00000001 // arg to foo
+0x8010b598: 0x80102e32 // return address for foo()
+0x8010b594: 0x8010b5a4    <-- ebp
+0x8010b590: 0x00000000    <-- esp (local variable, argument to a funciton, or 
+                                    register spill inside foo)
+```
+## Analyze output
+
+(b)  (5 points)  If  Alice  continues  execution  of  her  program  what  output  will  she  see  on  thescreen (justify your answer).
+
+***Reference Solution***
+
+We know that foo() can be called from bar() or baz(), but we also know that the caller of foo()’s caller i.e., either bar() or baz(), got two arguments.  Hence, it’s bar().  And since we know that foo() got 0x1 as argument the string Alice will see on the screen should be `bar:1`
+
+# Xv6 process organization.
+
+In xv6, in the address space of the process, what does the following virtual addresses contain?
+
+## (3 points)  Virtual address 0x0
+
+***Reference Solution***
+
+The memory at virtual address 0x0 contains the text section (code) of the user process.
+
+## (3 points)  Virtual address 0x80100000
+
+
+***Reference Solution:***
+
+The memory at virtual address 0x80100000 contains the text section (code) of the kernel. During the boot the kernel was loaded at physical address 0x100000 (1MB) and then later this address was mapped at 2GBs + 1MB or (0x80000000 + 0x100000).
+
+
+## (3 points)  What physical address is mapped at virtual address 0x80000000
+
+***Reference Solution:***
+
+Physical address 0x0.
+
+## Physical address mapping lookup
+
+(7 points)  Is there a way for the kernel to find out what physical address is mapped at a specific virtual address?  Provide an explanation and a code sketch (pseudocode is ok, no need to worry about correct C syntax). Your code should take a virtual address as an input and resolve it into the physical address that is mapped into that virtual address by the process page table (in your code feel free to re-use functions that are already implemented in the xv6 kernel).
+
+
+***Reference Solution:***
+
+In xv6 we can access the entire page table and the page tables contain information about how a virtual address mapps to the physical address. Therefore, we only need to go though the table to find out where the physical page lie in the page table and then we will be able to find out the virtual addresses that are directing to this physical address.
+
+

@@ -163,4 +163,18 @@ In xv6 we can access the entire page table and the page tables contain informati
 
 Please see the C file at https://github.com/StrayBird-ATSH/OperatingSystemCourseMidTermExams/blob/master/Fall%202018/Fall2018Mid-Virtual2Physical.c
 
+# Protection and isolation
+
+## Kenrel Memory Protection Explanation
+
+(5 points)  In  xv6  all  segments  are  configured  to  have  the  base  of  0  and  limit  of  4GBs, which  means  that  segmentation  does  not  prevent  user  programs  from  accessing  kernelmemory.  Nevertheless, user programs can’t read and write kernel memory.  How (through what mechanisms) such isolation is achieved?
+
+***Reference Solution:***
+
+
+Above all, xv6 adopts page tables. That is, the kernel memory and user memory will reside in different pages. Also, each page has a flag indicating whether this page is for kernel or for user. Therefore, when a user program wants to access kernel program, it will access the kernel pages, and visiting a page with a kernel flag will trigger a fault. So achieved.
+
+# System calls
+
+***This question is not covered in this midterm***
 

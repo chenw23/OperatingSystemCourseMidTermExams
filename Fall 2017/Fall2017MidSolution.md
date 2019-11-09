@@ -5,11 +5,7 @@ author:
   - Chen Wang^[Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (chenw23@uci.edu)]
 date: "11/8/2019"
 output:
-  pdf_document:
-    toc: true
-    toc_depth: 3
-    number_sections: true
-    keep_tex: true
+
   html_document:
     keep_md: yes
   word_document: default

@@ -1,0 +1,133 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Fall 2017 Mid Term Solution},
+            pdfauthor={Chen Wang},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Fall 2017 Mid Term Solution}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \subtitle{Solution for CS 143A course at University of California, Irvine}
+  \author{Chen Wang\footnote{Undergraduate in Computer Engineering, Samueli School
+  of Engineering, University of California, Irvine.
+  (\href{mailto:chenw23@uci.edu}{\nolinkurl{chenw23@uci.edu}})}}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{11/8/2019}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{basic-page-tables.}{%
+\section{Basic page tables.}\label{basic-page-tables.}}
+
+\hypertarget{address-mapping-explanation}{%
+\subsection{Address Mapping
+Explanation}\label{address-mapping-explanation}}
+
+(10 points) Illustrate the page table used by xv6 to map the kernel into
+the virtual address space of each process (draw a page table diagram and
+explain the page table entries). Specifically concentrate on one entry:
+the entry responsible for the translation of the firstpage of the
+kernel. Keep in mind that xv6 maps the kernel into the virtual address
+range starting above the second gigabyte of virtual memory. Note, that
+after xv6 is done booting,it xv6 uses normal 4KB, 32bit, 2-level page
+tables. You also have to recall the physicall address of the first
+kernel page (look at the boot lecture or the kernel map), and the
+virtual address where this page is mapped. To make the example
+realistic, don't forget that xv6 allocates memory for it's page table
+directory and page tables from the kernel memory allocator.
+
+\textbf{\emph{Reference Solution:}}
+
+The mapping relationship can be just found on the
+\href{https://www.ics.uci.edu/~aburtsev/143A/lectures/lecture10-kernel-page-table/lecture10-kernel-page-table.pdf}{Lecture
+10 - Kernel Page Table}, the diagram is on the slide page 79. And for
+the page table diagram, this can be found at the slide page 82. As for
+the first page of the kernel, it is certainly at virtual address
+0x80000000. We take its first 10 bits, and find out that this is at the
+512th entry at the page table directory. Then we take the second 10 bits
+of the virtual address, which is 0, we can look into the 0th entry of
+the page table found throught the 512th entry of the directory. Through
+the 0th entry of the table, we find out the physical address of the
+kernel.
+
+
+\end{document}

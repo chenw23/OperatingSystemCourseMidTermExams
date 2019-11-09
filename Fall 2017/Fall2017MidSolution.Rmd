@@ -1,0 +1,28 @@
+---
+title: "Fall 2017 Mid Term Solution"
+subtitle: "Solution for CS 143A course at University of California, Irvine"
+author: 
+  - Chen Wang^[Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (chenw23@uci.edu)]
+date: "11/8/2019"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    keep_tex: true
+  html_document:
+    keep_md: yes
+  word_document: default
+  odt_document: default
+  rtf_document: default
+---
+
+# Basic page tables.
+
+## Address Mapping Explanation
+
+(10 points)  Illustrate the page table used by xv6 to map the kernel into the virtual address space  of  each  process  (draw  a  page  table  diagram  and  explain  the  page  table  entries). Specifically concentrate on one entry:  the entry responsible for the translation of the firstpage of the kernel.  Keep in mind that xv6 maps the kernel into the virtual address range starting above the second gigabyte of virtual memory. Note, that after xv6 is done booting,it xv6 uses normal 4KB, 32bit, 2-level page tables.  You also have to recall the physicall address of the first kernel page (look at the boot lecture or the kernel map), and the virtual address where this page is mapped.  To make the example realistic, don’t forget that xv6 allocates memory for it’s page table directory and page tables from the kernel memory allocator.
+
+***Reference Solution:***
+
+The mapping relationship can be just found on the [Lecture 10 - Kernel Page Table](https://www.ics.uci.edu/~aburtsev/143A/lectures/lecture10-kernel-page-table/lecture10-kernel-page-table.pdf), the diagram is on the slide page 79. And for the page table diagram, this can be found at the slide page 82. As for the first page of the kernel, it is certainly at virtual address 0x80000000. We take its first 10 bits, and find out that this is at the 512th entry at the page table directory. Then we take the second 10 bits of the virtual address, which is 0, we can look into the 0th entry of the page table found throught the 512th entry of the directory. Through the 0th entry of the table, we find out the physical address of the kernel.

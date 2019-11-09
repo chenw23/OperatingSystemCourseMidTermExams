@@ -1,0 +1,160 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \qc \f0 \sa180 \li0 \fi0 \b \fs36 Fall 2018 Mid Term Solution\par}
+{\pard \qc \f0 \sa180 \li0 \fi0  Chen Wang{\super\chftn}{\*\footnote\chftn\~\plain\pard {\pard \ql \f0 \sa180 \li0 \fi0 Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. ({\field{\*\fldinst{HYPERLINK "mailto:chenw23@uci.edu"}}{\fldrslt{\ul
+chenw23@uci.edu
+}}}
+)\par}
+}\par}
+{\pard \qc \f0 \sa180 \li0 \fi0  11/8/2019\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 OS Interfaces\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i This question is not covered in this midterm}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Basic page tables\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 (5 points) Draw page table structure\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Alice wants to construct a page table that maps virtual addresses 0x0, 0x1000and 0x2000 into physical addresses 0x1000, 0x2000, and 0x3000. Assume that the Page Directory Page is at physical address 0x0, and the Page Table Page is at physical address0x00001000 (which is PPN 0x00001).\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Draw a picture of the page table Alice will construct (or alternatively simply write it down in the format similar to the one below):\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Page Directory Page:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 PDE 0: PPN=0x1, PTE_P, PTE_U, PTE_W}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \u8230? all other PDEs are zero\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The Page Table Page:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W\line
+PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W\line
+PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \u8230? all other PTEs are zero\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Page Directory Page:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 PDE 0: PPN=0x1, PTE_P, PTE_U, PTE_W}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \u8230? all other PDEs are zero\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The Page Table Page:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 PTE 0: PPN=0x1, PTE_P, PTE_U, PTE_W\line
+PTE 1: PPN=0x2, PTE_P, PTE_U, PTE_W\line
+PTE 2: PPN=0x3, PTE_P, PTE_U, PTE_W\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \u8230? all other PTEs are zero\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Stack and calling conventions\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Alice developed a program that has a function {\f1 foo()} that is called from two other functions {\f1 bar()} and {\f1 baz()}:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 int foo(int a) \{\line
+  ...\line
+\}\line
+\line
+int bar(int a, int b) \line
+  ...\line
+  foo(x);\line
+  printf("bar:%d\\n", x);\line
+  ...\line
+\}\line
+\line
+int baz(int a, int b, int c) \{\line
+  ...\line
+  foo(x);\line
+  printf("baz:%d\\n", x);\line
+  ...\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 While debugging her program Alice observes the following state when she hits a break point of the program inside {\f1 foo()} (assume that the compiler does not inline invocations of {\f1 foo()}, {\f1 bar()}, and {\f1 baz()}, and follows the calling conventions that we\u8217've covered in the class)\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 The bottom of the stack:\line
+\line
+0x8010b5b4: ...\line
+0x8010b5b0: 0x00000003\line
+0x8010b5ac: 0x00000002\line
+0x8010b5a8  0x80102e80\line
+0x8010b5a4: 0x8010b5b4\line
+0x8010b5a0: 0x80112780\line
+0x8010b59c: 0x00000001\line
+0x8010b598: 0x80102e32\line
+0x8010b594: 0x8010b5a4    <-- ebp\line
+0x8010b590: 0x00000000    <-- esp\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Explain Stack\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 (a)\tx360\tab (5 points) Provide a short explanation for each line of the stack dump above (you can annotate the printout above).\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 The bottom of the stack:\line
+\line
+0x8010b5b4: ...        // ebp\line
+0x8010b5b0: 0x00000003 // argument #2 to the function that called foo()\u8217's caller\line
+0x8010b5ac: 0x00000002 // argument #1 to the function that called foo()\u8217's caller\line
+0x8010b5a8  0x80102e80 // return address\line
+0x8010b5a4: 0x8010b5b4 // ebp\line
+0x8010b5a0: 0x80112780 // (local variable, argument to a funciton, or register\line
+                          spill inside function that called foo)\line
+0x8010b59c: 0x00000001 // arg to foo\line
+0x8010b598: 0x80102e32 // return address for foo()\line
+0x8010b594: 0x8010b5a4    <-- ebp\line
+0x8010b590: 0x00000000    <-- esp (local variable, argument to a funciton, or \line
+                                    register spill inside foo)\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Analyze output\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 (b)\tx360\tab (5 points) If Alice continues execution of her program what output will she see on the screen (justify your answer).\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 We know that foo() can be called from bar() or baz(), but we also know that the caller of foo()\u8217's caller i.e., either bar() or baz(), got two arguments. Hence, it\u8217's bar(). And since we know that foo() got 0x1 as argument the string Alice will see on the screen should be {\f1 bar:1}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Xv6 process organization.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In xv6, in the address space of the process, what does the following virtual addresses contain?\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 (3 points) Virtual address 0x0\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The memory at virtual address 0x0 contains the text section (code) of the user process.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 (3 points) Virtual address 0x80100000\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The memory at virtual address 0x80100000 contains the text section (code) of the kernel. During the boot the kernel was loaded at physical address 0x100000 (1MB) and then later this address was mapped at 2GBs + 1MB or (0x80000000 + 0x100000).\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 (3 points) What physical address is mapped at virtual address 0x80000000\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Physical address 0x0.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Physical address mapping look-up\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 (7 points) Is there a way for the kernel to find out what physical address is mapped at a specific virtual address? Provide an explanation and a code sketch (pseudo-code is OK, no need to worry about correct C syntax). Your code should take a virtual address as an input and resolve it into the physical address that is mapped into that virtual address by the process page table (in your code feel free to re-use functions that are already implemented in the xv6 kernel).\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In xv6 we can access the entire page table and the page tables contain information about how a virtual address maps to the physical address. Therefore, we only need to go though the table to find out where the physical page lie in the page table and then we will be able to find out the virtual addresses that are directing to this physical address.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Please see the C file at {\field{\*\fldinst{HYPERLINK "https://github.com/StrayBird-ATSH/OperatingSystemCourseMidTermExams/blob/master/Fall%202018/Fall2018Mid-Virtual2Physical.c"}}{\fldrslt{\ul
+https://github.com/StrayBird-ATSH/OperatingSystemCourseMidTermExams/blob/master/Fall%202018/Fall2018Mid-Virtual2Physical.c
+}}}
+\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Protection and isolation\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Kernel Memory Protection Explanation\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 (5 points) In xv6 all segments are configured to have the base of 0 and limit of 4GBs, which means that segmentation does not prevent user programs from accessing kernel memory. Nevertheless, user programs can\u8217't read and write kernel memory. How (through what mechanisms) such isolation is achieved?\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Above all, xv6 adopts page tables. That is, the kernel memory and user memory will reside in different pages. Also, each page has a flag indicating whether this page is for kernel or for user. Therefore, when a user program wants to access kernel program, it will access the kernel pages, and visiting a page with a kernel flag will trigger a fault. So achieved.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 System calls\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i This question is not covered in this midterm}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Physical and virtual memory allocation\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 V2P macro usage explanation\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 (5 points) What is the purpose of the V2P macro? Specifically, the {\f1 allocuvm()} function(see the listing below) uses {\f1 kalloc()} to allocate and map a region of memory into the address space of a process. Explain, why the {\f1 V2P} macro is used in line 1946 below?\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 1926 int\line
+1927 allocuvm(pde_t *pgdir, uint oldsz, uint newsz)\line
+1928 \{\line
+1929   char *mem;\line
+1930   uint a;\line
+1931\line
+1932   if(newsz >= KERNBASE)\line
+1933     return 0;\line
+1934   if(newsz < oldsz)\line
+1935     return oldsz;\line
+1936\line
+1937   a = PGROUNDUP(oldsz);\line
+1938   for(; a < newsz; a += PGSIZE)\{\line
+1939     mem = kalloc();\line
+1940     if(mem == 0)\{\line
+1941       cprintf("allocuvm out of memory\\n");\line
+1942       deallocuvm(pgdir, newsz, oldsz);\line
+1943       return 0;\line
+1944     \}\line
+1945     memset(mem, 0, PGSIZE);\line
+1946     if(mappages(pgdir, (char*)a, PGSIZE, V2P(mem), PTE_W|PTE_U) < 0)\{\line
+1947       cprintf("allocuvm out of memory (2)\\n");\line
+1948       deallocuvm(pgdir, newsz, oldsz);\line
+1949       kfree(mem)\line
+1950       return 0;\line
+1951     \}\line
+1952   \}\line
+1953   return newsz;\line
+1954 \}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It translates a virtual address into physical address.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Because the {\f1 mappages} needs to check whether a physical page is mapped or not, or whether it is available. This translations gives the {\f1 mappages} function the location of the physical page needed and this function will do the mapping work.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Initial page tables\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Bob looks at the piece of code in entry.S where the initial page tables are set and thinks he doesn\u8217't need the entry that maps the 0-4MB of virtual page to 0-4MB of physical page. Accordingly he modifies the entry pgdir as below.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 __attribute__((__aligned__(PGSIZE)))\line
+pde_t entrypgdir[NPDENTRIES] = \{\line
+  // Map VA\u8217's [KERNBASE, KERNBASE+4MB) to PA\u8217's [0, 4MB)\line
+  [KERNBASE>>PDXSHIFT] = (0) | PTE_P | PTE_W | PTE_PS,\line
+\};\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 (5 points) Explain what will go wrong with Bob\u8217's change?\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Because when the system initially boots, there was no kernel section in the upper 2GB and the codes are in the first 4MB space. Therefore, before the new page table is successfully mapped, we still need the mapping of the first 4MB to keep the code running smoothly.\par}
+}

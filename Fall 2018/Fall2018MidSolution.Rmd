@@ -1,5 +1,6 @@
 ---
 title: "Fall 2018 Mid Term Solution"
+subtitle: "Solution for CS 143A course at University of California, Irvine"
 author: 
   - Chen Wang^[Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (chenw23@uci.edu)]
 date: "11/8/2019"
@@ -14,7 +15,6 @@ output:
   word_document: default
   odt_document: default
   rtf_document: default
-  github_document: default
 ---
 
 

@@ -1,0 +1,245 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Winter 2017 Mid Term Solution},
+            pdfauthor={Chen Wang},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Winter 2017 Mid Term Solution}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \subtitle{Solution for CS 143A course at University of California, Irvine}
+  \author{Chen Wang\footnote{Undergraduate in Computer Engineering, Samueli School
+  of Engineering, University of California, Irvine.
+  (\href{mailto:chenw23@uci.edu}{\nolinkurl{chenw23@uci.edu}})}}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{11/8/2019}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{basic-page-tables.}{%
+\section{Basic page tables.}\label{basic-page-tables.}}
+
+\hypertarget{address-translation-through-an-example}{%
+\subsection{Address Translation through an
+example}\label{address-translation-through-an-example}}
+
+(5 points) Illustrate organization of the x86, 4K, 32bit 2-level page
+tables through a simple example. Assume that the hardware translates the
+virtual address '0xc04005' (binary 0b1100 0000 0100 0000 0000 0101) into
+the physical address '0x55005'. The physical addresses of the page table
+directory and the page table (Level 2) involved in the translation of
+this virtual address are 0x8000 and 0x2000. Draw a diagram, provide a
+short explanation.
+
+\textbf{\emph{Reference Solution:}}
+
+Well, it should be simple. Just follow the diagram on page 65 of the
+slide
+\href{https://www.ics.uci.edu/~aburtsev/143A/lectures/lecture10-kernel-page-table/lecture10-kernel-page-table.pdf}{Lecture
+10 - Kernel Page Table}. Fill in the actual address number and it should
+be OK.
+
+\hypertarget{shell}{%
+\section{Shell}\label{shell}}
+
+\textbf{\emph{This question is not covered in this midterm}}
+
+\hypertarget{os-isolation-and-protection}{%
+\section{OS isolation and
+protection}\label{os-isolation-and-protection}}
+
+\hypertarget{user-vs.kernel-isolation}{%
+\subsection{User vs.~kernel isolation}\label{user-vs.kernel-isolation}}
+
+\textbf{\emph{Reference Solution:}}
+
+Please refer to the Problem 3.1 of Midterm Fall 2017.
+
+\hypertarget{page-flag-design}{%
+\subsection{Page Flag Design}\label{page-flag-design}}
+
+(5 points) Imagine you have hardware that is identical to x86, but does
+not have a user bit in the page tables. What changes need to be made to
+xv6 to ensure isolation of the kernel from user-processes?
+
+\textbf{\emph{Reference Solution:}}
+
+We need to modify the MMU part. In this part, rather than directly
+looking up in the directory, we will check whether the address is
+greater than 2GB. If the address is greater than 2GB, then it must be
+from a system call. Otherwise, the system can raise a fault.
+
+\hypertarget{os-organization.}{%
+\section{OS organization.}\label{os-organization.}}
+
+Imagine you want to optimize xv6 to run a large number of very small
+processes. A realistic example can be a web server that implements a
+Facebook's login page---you have to isolate each user in its own
+process, otherwise a single exploit from any user reveals accounts of
+all users going through the login page, but at the same time each
+process is very small (it just sends out a simple HTML page). Entire
+logic of such web server program can fitin 2-3K of memory.
+
+\hypertarget{page-count}{%
+\subsection{Page count}\label{page-count}}
+
+(10 points) You start by analyzing the overheads involved into creating
+a process. How many pages of memory are allocated when xv6 creates a
+smallest process? Count both user-level and kernel resources.
+
+\textbf{\emph{Reference Solution:}}
+
+Since the process is small, we assume each part of the user-level
+program can fit in one page.
+
+For user-level: One for text, one for data, one for heap, one for stack.
+Totally at least 4. For kernel-level: 0 \textasciitilde{} 234MB, that is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{234} \OperatorTok{*}\StringTok{ }\DecValTok{1024} \OperatorTok{/}\StringTok{ }\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 59904
+\end{verbatim}
+
+Therefore, in total there should be 59908 pages.
+
+\hypertarget{optimizing-suggestion}{%
+\subsection{Optimizing Suggestion}\label{optimizing-suggestion}}
+
+(10 points) Suggest a set of changes to xv6 aimed at minimizing the
+number of pages that are required for creating very small processes,
+e.g., the once that are 1K in size.
+
+\textbf{\emph{Reference Solution:}}
+
+Carefully analyze what system calls are used by these web page
+processes. Then in the mapped kernel space, omit out the functions that
+are not used by these small programs. It should be common that the small
+programs should only use limited functions of the system - otherwise,
+they won't be small.
+
+
+\end{document}

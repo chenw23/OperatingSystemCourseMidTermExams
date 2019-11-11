@@ -59,18 +59,18 @@ Imagine  you  want  to  optimize  xv6  to  run  a  large  number  of  very  smal
 
 Since the process is small, we assume each part of the user-level program can fit in one page.
 
-For user-level: One for text, one for data, one for heap, one for stack. Totally at least 4.
-For kernel-level: 0 ~ 234MB, that is 
+For user-level: One for text, one for data, one for heap, one for stack, and 1 for the Page table directory, 1 for the Page table. Totally at least 6.
+For kernel-level: 0 ~ 234MB, and we know that a page maps 4MB of space, that is it needs `234MB/4MB` pages
 
 
 ```r
-234 * 1024 / 4
+234 / 4 + 6
 ```
 
 ```
-## [1] 59904
+## [1] 64.5
 ```
-Therefore, in total there should be 59908 pages.
+Therefore, in total there should be 65 pages.
 
 ## Optimizing Suggestion
 (10 points)  Suggest a set of changes to xv6 aimed at minimizing the number of pages that are required for creating very small processes, e.g., the once that are 1K in size.

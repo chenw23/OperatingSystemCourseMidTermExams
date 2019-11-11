@@ -211,20 +211,22 @@ smallest process? Count both user-level and kernel resources.
 Since the process is small, we assume each part of the user-level
 program can fit in one page.
 
-For user-level: One for text, one for data, one for heap, one for stack.
-Totally at least 4. For kernel-level: 0 \textasciitilde{} 234MB, that is
+For user-level: One for text, one for data, one for heap, one for stack,
+and 1 for the Page table directory, 1 for the Page table. Totally at
+least 6. For kernel-level: 0 \textasciitilde{} 234MB, and we know that a
+page maps 4MB of space, that is it needs \texttt{234MB/4MB} pages
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DecValTok{234} \OperatorTok{*}\StringTok{ }\DecValTok{1024} \OperatorTok{/}\StringTok{ }\DecValTok{4}
+\DecValTok{234} \OperatorTok{/}\StringTok{ }\DecValTok{4} \OperatorTok{+}\StringTok{ }\DecValTok{6}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 59904
+## [1] 64.5
 \end{verbatim}
 
-Therefore, in total there should be 59908 pages.
+Therefore, in total there should be 65 pages.
 
 \hypertarget{optimizing-suggestion}{%
 \subsection{Optimizing Suggestion}\label{optimizing-suggestion}}

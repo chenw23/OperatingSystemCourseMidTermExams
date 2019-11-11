@@ -34,10 +34,10 @@ Lecture 10 - Kernel Page Table
 {\pard \ql \f0 \sa180 \li0 \fi0 (10 points) You start by analyzing the overheads involved into creating a process. How many pages of memory are allocated when xv6 creates a smallest process? Count both user-level and kernel resources.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 Since the process is small, we assume each part of the user-level program can fit in one page.\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 For user-level: One for text, one for data, one for heap, one for stack. Totally at least 4. For kernel-level: 0 ~ 234MB, that is\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 \f1 234 * 1024 / 4\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 \f1 ## [1] 59904\par}
-{\pard \ql \f0 \sa180 \li0 \fi0 Therefore, in total there should be 59908 pages.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 For user-level: One for text, one for data, one for heap, one for stack, and 1 for the Page table directory, 1 for the Page table. Totally at least 6. For kernel-level: 0 ~ 234MB, and we know that a page maps 4MB of space, that is it needs {\f1 234MB/4MB} pages\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 234 / 4 + 6\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 ## [1] 64.5\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Therefore, in total there should be 65 pages.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Optimizing Suggestion\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 (10 points) Suggest a set of changes to xv6 aimed at minimizing the number of pages that are required for creating very small processes, e.g., the once that are 1K in size.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}

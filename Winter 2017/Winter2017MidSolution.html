@@ -405,10 +405,10 @@ summary {
 <p>(10 points) You start by analyzing the overheads involved into creating a process. How many pages of memory are allocated when xv6 creates a smallest process? Count both user-level and kernel resources.</p>
 <p><strong><em>Reference Solution:</em></strong></p>
 <p>Since the process is small, we assume each part of the user-level program can fit in one page.</p>
-<p>For user-level: One for text, one for data, one for heap, one for stack. Totally at least 4. For kernel-level: 0 ~ 234MB, that is</p>
-<pre class="r"><code>234 * 1024 / 4</code></pre>
-<pre><code>## [1] 59904</code></pre>
-<p>Therefore, in total there should be 59908 pages.</p>
+<p>For user-level: One for text, one for data, one for heap, one for stack, and 1 for the Page table directory, 1 for the Page table. Totally at least 6. For kernel-level: 0 ~ 234MB, and we know that a page maps 4MB of space, that is it needs <code>234MB/4MB</code> pages</p>
+<pre class="r"><code>234 / 4 + 6</code></pre>
+<pre><code>## [1] 64.5</code></pre>
+<p>Therefore, in total there should be 65 pages.</p>
 </div>
 <div id="optimizing-suggestion" class="section level2">
 <h2>Optimizing Suggestion</h2>

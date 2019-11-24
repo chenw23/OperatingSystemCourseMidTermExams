@@ -5,13 +5,16 @@ author:
   - Chen Wang^[Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (chenw23@uci.edu)]
 date: "11/8/2019"
 output:
-
-  html_document:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
     keep_md: yes
+    keep_tex: true
+  html_document: default
   word_document: default
   odt_document: default
   rtf_document: default
-  github_document: default
 ---
 
 

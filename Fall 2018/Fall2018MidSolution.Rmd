@@ -9,9 +9,9 @@ output:
     toc: true
     toc_depth: 3
     number_sections: true
-    keep_tex: true
-  html_document:
     keep_md: yes
+    keep_tex: true
+  html_document: default
   word_document: default
   odt_document: default
   rtf_document: default
@@ -24,7 +24,57 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # OS Interfaces
 
-***This question is not covered in this midterm***
+## (a) (5 points) Program Analysis
+
+Heres a program that uses the UNIX system call API, as described in Chapter 0 of the xv6 book:
+
+```
+#include "param.h"
+#include "types.h"
+#include "user.h"
+#include "syscall.h"
+int main() {
+  char * message = "aaa\n";
+  int pid = fork();
+  
+  if(pid != 0){
+  
+    char *echoargv[] = { "echo", "Hello\n", 0 };
+    
+    message = "bbb\n";
+    exec("echo", echoargv);
+    write(1, message, 4);
+    
+  }
+  
+  write(1, message, 4);
+  exit();
+}
+```
+
+
+Assume that fork() succeeds, that file descriptor 1 is connected to the terminal when the program starts, and echo program exists. What possible outputs this program can produce (explain your answer)?
+
+
+***Reference Solution:***
+
+The proccess forks() and execs() the “echo” program that prints “Hello” inside the parent. Since exec() overloads the address space of the parent the write(1, message, 4)line never gets executed (we assume that “echo” exists and exec() succeeds). The child prints “aaa”. Two possible outputs depending on the order in which parent and child execute are
+```
+aaa
+Hello
+```
+or
+```
+Hello
+aaa
+```
+## (b) (10 points) Multi-level pipe
+
+Write a program that uses the UNIX system call API, as described in Chapter 0 of the xv6 book. The program forks and creates a pipeline of 10 stages. I.e., each stage is a separate process. Each two consequtive stages are connected with a pipe, i.e., the standard output of each stage is connected to the standard input of the next stage. Each stage reads a character from its standard input and sends it to the standard output. The last stage outputs the character it reads from the pipe to the standard output.
+
+***Reference Solution:***
+
+
 
 # Basic page tables
 

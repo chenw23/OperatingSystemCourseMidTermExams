@@ -10,11 +10,11 @@ output:
     toc_depth: 3
     number_sections: true
     keep_tex: true
+  word_document: default
+  rtf_document: default
   html_document:
     keep_md: yes
-  word_document: default
   odt_document: default
-  rtf_document: default
 ---
 
 # Basic page tables.

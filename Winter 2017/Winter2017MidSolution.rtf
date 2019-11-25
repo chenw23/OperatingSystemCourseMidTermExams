@@ -20,6 +20,9 @@ Lecture 10 - Kernel Page Table
 . Fill in the actual address number and it should be OK.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Shell\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i This question is not covered in this midterm}}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The file descriptor 1 is the standard output. So the left side process is the input of the pipe. It closes its standard output so that in the next {\f1 dup} command, the input of the pipe can be directed to the output of this process.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Likewise, the file descriptor 0 is the standard input So the right side process is the output of the pipe. It closes its standard input so that in the next {\f1 dup} command, the output of the pipe can be directed to the input of this process.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This is not true because in the {\f1 runcmd} function, the process will be executing a new program and they will exit rather than returning to the following codes in this page.\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 OS isolation and protection\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 User vs.\u160?kernel isolation\par}
 {\pard \ql \f0 \sa180 \li0 \fi0 {\b {\i Reference Solution:}}\par}

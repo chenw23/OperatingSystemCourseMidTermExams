@@ -11,10 +11,10 @@ output:
     number_sections: true
     keep_md: yes
     keep_tex: true
+  rtf_document: default
   html_document: default
   word_document: default
   odt_document: default
-  rtf_document: default
 ---
 
 # Basic page tables.

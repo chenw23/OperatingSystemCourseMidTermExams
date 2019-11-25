@@ -132,7 +132,56 @@ kernel.
 \hypertarget{shell}{%
 \section{Shell}\label{shell}}
 
-\textbf{\emph{This question is not covered in this midterm}}
+Alice works on implementing a new shell for xv6. She implements a pipe
+command (e.g., ls\textbar{}wc) like this:
+
+\begin{verbatim}
+void
+runcmd(struct cmd *cmd)
+{
+  ...
+  switch(cmd->type){
+  default:
+    fprintf(stderr, "unknown runcmd\n");
+    exit(-1);
+    
+    case ’|’: pcmd = (struct pipecmd*)cmd;
+      int p[2];
+      pipe(p);
+      int pid = fork();
+      if(pid == 0){//child process:left side
+        close(1);
+        dup(p[1]);
+        close(p[1]);
+        close(p[0]);
+        runcmd(pcmd->left);
+      }
+      close(0);
+      dup(p[0]);
+      close(p[0]);
+      close(p[1]);
+      wait(NULL);
+      runcmd(pcmd->right);
+      break;
+    }
+    ...
+}
+\end{verbatim}
+
+\hypertarget{wrong-implementation-analysis}{%
+\subsection{Wrong Implementation
+Analysis}\label{wrong-implementation-analysis}}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  (5 points) Her implementation always waits for left side to finish,
+  but she is not sure if it's correct since she notices that the shell
+  that xv6 implements (sh.c in the xv6 source tree) launches the right
+  side right away. Can you come up with an example for which Alice's
+  shell fails, while the xv6's is still correct? Explain your answer.
+\end{enumerate}
 
 \hypertarget{os-isolation-and-protection}{%
 \section{OS isolation and

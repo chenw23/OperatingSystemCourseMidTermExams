@@ -31,6 +31,13 @@ Well, it should be simple. Just follow the diagram on page 65 of the slide [Lect
 
 ***This question is not covered in this midterm***
 
+The file descriptor 1 is the standard output. So the left side process is the input of the pipe. It closes its standard output so that in the next `dup` command, the input of the pipe can be directed to the output of this process.
+
+Likewise, the file descriptor 0 is the standard input So the right side process is the output of the pipe. It closes its standard input so that in the next `dup` command, the output of the pipe can be directed to the input of this process.
+
+
+This is not true because in the `runcmd` function, the process will be executing a new program and they will exit rather than returning to the following codes in this page.
+
 # OS isolation and protection
 
 ## User vs. kernel isolation

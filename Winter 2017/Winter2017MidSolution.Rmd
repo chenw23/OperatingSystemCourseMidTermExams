@@ -21,7 +21,7 @@ output:
 
 ## Address Translation through an example
 
-(5 points)  Illustrate  organization  of  the  x86,  4K,  32bit  2-level  page  tables  through  a simple example.  Assume that the hardware translates the virtual address ’0xc04005’ (binary 0b1100 0000 0100 0000 0000 0101) into the physical address ’0x55005’.  The physical addresses of the page table directory and the page table (Level 2) involved in the translation of this virtual address are 0x8000 and 0x2000.  Draw a diagram,  provide a short explanation.
+(5 points)  Illustrate  organization  of  the  x86,  4K,  32bit  2-level  page  tables  through  a simple example.  Assume that the hardware translates the virtual address '0xc04005' (binary 0b1100 0000 0100 0000 0000 0101) into the physical address '0x55005'.  The physical addresses of the page table directory and the page table (Level 2) involved in the translation of this virtual address are 0x8000 and 0x2000.  Draw a diagram,  provide a short explanation.
 
 ***Reference Solution:***
 
@@ -29,12 +29,49 @@ Well, it should be simple. Just follow the diagram on page 65 of the slide [Lect
 
 # Shell
 
-***This question is not covered in this midterm***
+Xv6 shell implements a pipe command (e.g., ls — wc) as follows:
+
+```
+8650 case PIPE:
+8651 pcmd = (struct pipecmd*)cmd;
+8652 if(pipe(p) < 0)
+8653   panic("pipe");
+8654 if(fork1() == 0){
+8655   close(1);
+8656   dup(p[1]);
+8657   close(p[0]);
+8658   close(p[1]);
+8659   runcmd(pcmd>left);
+8660 }
+8661 if(fork1() == 0){
+8662   close(0);
+8663   dup(p[0]);
+8664   close(p[0]);
+8665   close(p[1]);
+8666   runcmd(pcmd>right);
+8667 }
+8668 close(p[0]);
+8669 close(p[1]);
+8670 wait();
+8671 wait();
+8672 break;
+```
+
+## Pipe Analysis
+
+(a)  (5 points)  Why does the child process that runs the left-side of the pipe close file descriptor1 and why does the child process that runs the right-side of the pipe close file descriptor0?
+
+***Reference Solution:***
 
 The file descriptor 1 is the standard output. So the left side process is the input of the pipe. It closes its standard output so that in the next `dup` command, the input of the pipe can be directed to the output of this process.
 
 Likewise, the file descriptor 0 is the standard input So the right side process is the output of the pipe. It closes its standard input so that in the next `dup` command, the output of the pipe can be directed to the input of this process.
 
+## Problem Analysis
+
+(b)  (5 points)  It looks that in the sh.c code above after the first fork() (at line 8654) both parent and child will reach the second fork() (line 8661) creating two child processes.  Both child processes will start reading from the pipe and will try to execute the right side of the pipe.  This seems wrong.  Can you explain what is happening?
+
+***Reference Solution:***
 
 This is not true because in the `runcmd` function, the process will be executing a new program and they will exit rather than returning to the following codes in this page.
 
@@ -44,7 +81,7 @@ This is not true because in the `runcmd` function, the process will be executing
 
 ***Reference Solution:***
 
-Please refer to the Problem 3.1 of Midterm Fall 2017.
+The user bit is not set in either page directory entry or page table entry (or both) for all translations that allow accessing pages of the kernel.
 
 ## Page Flag Design
 
@@ -52,7 +89,7 @@ Please refer to the Problem 3.1 of Midterm Fall 2017.
 
 ***Reference Solution:***
 
-We need to modify the MMU part. In this part, rather than directly looking up in the directory, we will check whether the address is greater than 2GB. If the address is greater than 2GB, then it must be from a system call. Otherwise, the system can raise a fault.
+If the Kernel is always in the front of physical memory, that is it starts at address 0 and goes till address phystop, we could enable segmentation to ensure that the physical memory that the Kernel is in can not be reached by the process.
 
 # OS  organization. 
 

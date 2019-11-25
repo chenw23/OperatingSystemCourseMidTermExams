@@ -80,7 +80,7 @@ Please see the C file at https://github.com/StrayBird-ATSH/OperatingSystemCourse
 
 ## (5 points)  Draw page table structure
 
-Alice wants to construct a page table that maps virtual addresses 0x0, 0x1000and 0x2000 into physical addresses 0x1000, 0x2000, and 0x3000.  Assume that the Page Directory Page is at physical address 0x0, and the Page Table Page is at physical address0x00001000 (which is PPN 0x00001).
+Alice wants to construct a page table that maps virtual addresses 0x0, 0x1000 and 0x2000 into physical addresses 0x1000, 0x2000, and 0x3000. Assume that the Page Directory Page is at physical address 0x0, and the Page Table Page is at physical address 0x00001000 (which is PPN 0x00001).
 
 Draw a picture of the page table Alice will construct (or alternatively simply write it down in the format similar to the one below):  
 
@@ -230,7 +230,21 @@ Above all, xv6 adopts page tables. That is, the kernel memory and user memory wi
 
 # System calls
 
-***This question is not covered in this midterm***
+## System Call arguments
+
+(a)  (5 points) 
+
+How do system calls access their arguments that are passed from the user level? After all, all system calls are declared as void functions that return an integer, i.e., visibly they don’t take any arguments. For example, the `read()` system call is declared as:
+```
+6131 int
+6132 sys_read(void)
+```
+But user code can invoke it as
+
+```
+int read(int, void*, int);
+```
+
 
 # Physical and virtual memory allocation
 

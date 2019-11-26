@@ -183,6 +183,19 @@ Analysis}\label{wrong-implementation-analysis}}
   shell fails, while the xv6's is still correct? Explain your answer.
 \end{enumerate}
 
+\textbf{\emph{Reference Solution:}}
+
+An example can be \texttt{ls\textbar{}wc}, when the files to be listed
+is too many so that the pipe memory will get full.
+
+Explanation:
+
+In this version, the two ends of the pipe will execute sequentially.
+That is, the right end of the pipe will wait for the left end of the
+pipe to finish and exit and it will start to run. So suppose the left
+side take a long time to run, or the contents it puts into the pipe is
+so much, problems will occur in such circumstances.
+
 \hypertarget{os-isolation-and-protection}{%
 \section{OS isolation and
 protection}\label{os-isolation-and-protection}}
@@ -231,11 +244,11 @@ memory (explain your answer)?
 
 \textbf{\emph{Reference Solution:}}
 
-Yes. Currently a process can access 2GB of virtual memory because the
-upper 4 GB are reserved by kernel. If this restriction is lifted, the
-user process can access more memory. Nevertheless, we should acknowledge
-that the corresponding page table flags should be changed accordingly as
-well.
+No.~Raising \texttt{KERNBASE} will leave kernel space less memory.
+However, page table and mappings reside in the kernel space. Therefore,
+shrinking the space that a kernel can use will also shrink the space a
+user process can use. So this will not allow a process to use more
+memory.
 
 
 \end{document}

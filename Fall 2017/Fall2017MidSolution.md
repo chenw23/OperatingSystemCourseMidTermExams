@@ -5,16 +5,16 @@ author:
   - Chen Wang^[Undergraduate in Computer Engineering, Samueli School of Engineering, University of California, Irvine. (chenw23@uci.edu)]
 date: "11/8/2019"
 output:
-  html_document:
-    keep_md: yes
-  word_document: default
   pdf_document:
     toc: true
     toc_depth: 3
     number_sections: true
+    keep_md: yes
     keep_tex: true
-  odt_document: default
+  word_document: default
   rtf_document: default
+  html_document: default
+  odt_document: default
 ---
 
 # Basic page tables.
@@ -29,7 +29,52 @@ The mapping relationship can be just found on the [Lecture 10 - Kernel Page Tabl
 
 # Shell
 
-***This question is not covered in this midterm***
+
+Alice works on implementing a new shell for xv6.  She implements a pipe command (e.g., ls|wc) like this:
+```
+void
+runcmd(struct cmd *cmd)
+{
+  ...
+  switch(cmd->type){
+  default:
+    fprintf(stderr, "unknown runcmd\n");
+    exit(-1);
+    
+    case ’|’: pcmd = (struct pipecmd*)cmd;
+      int p[2];
+      pipe(p);
+      int pid = fork();
+      if(pid == 0){//child process:left side
+        close(1);
+        dup(p[1]);
+        close(p[1]);
+        close(p[0]);
+        runcmd(pcmd->left);
+      }
+      close(0);
+      dup(p[0]);
+      close(p[0]);
+      close(p[1]);
+      wait(NULL);
+      runcmd(pcmd->right);
+      break;
+    }
+    ...
+}
+```
+
+## Wrong Implementation Analysis
+
+(a)  (5 points)  Her implementation always waits for left side to finish, but she is not sure if it’s correct since she notices that the shell that xv6 implements (sh.c in the xv6 source tree) launches the right side right away.  Can you come up with an example for which Alice’s shell fails, while the xv6’s is still correct?  Explain your answer.
+
+***Reference Solution:***
+
+An example can be `ls|wc`, when the files to be listed is too many so that the pipe memory will get full. 
+
+Explanation: 
+
+In this version, the two ends of the pipe will execute sequentially. That is, the right end of the pipe will wait for the left end of the pipe to finish and exit and it will start to run. So suppose the left side take a long time to run, or the contents it puts into the pipe is so much, problems will occur in such circumstances.
 
 # OS isolation and protection
 
@@ -59,4 +104,4 @@ Each process has its own page table. When reading from a virtual address, MMU wi
 
 ***Reference Solution:***
 
-Yes. Currently a process can access 2GB of virtual memory because the upper 4 GB are reserved by kernel. If this restriction is lifted, the user process can access more memory. Nevertheless, we should acknowledge that the corresponding page table flags should be changed accordingly as well.
+No. Raising `KERNBASE` will leave kernel space less memory. However, page table and mappings reside in the kernel space. Therefore, shrinking the space that a kernel can use will also shrink the space a user process can use. So this will not allow a process to use more memory.

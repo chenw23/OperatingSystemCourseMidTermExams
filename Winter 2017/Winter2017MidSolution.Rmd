@@ -101,6 +101,8 @@ Imagine  you  want  to  optimize  xv6  to  run  a  large  number  of  very  smal
 
 ***Reference Solution:***
 
+$\checkmark$  ***This solution is proofread by Prof. Anton***
+
 Since the process is small, we assume each part of the user-level program can fit in one page.
 
 For user-level: One for text and data, one for guard page, one for stack, and 1 for the Page table directory, 1 for the Page table. Totally at least 5 on the user's side.

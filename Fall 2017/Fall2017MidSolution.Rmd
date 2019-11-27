@@ -70,6 +70,8 @@ runcmd(struct cmd *cmd)
 
 ***Reference Solution:***
 
+$\checkmark$  ***This solution is proofread by Prof. Anton***
+
 An example can be `ls|wc`, when the files to be listed is too many so that the pipe memory will get full. 
 
 Explanation: 
@@ -93,6 +95,8 @@ The third bit from the right end is the kernel bit. It prevents the user from mo
 In  xv6  individual  processes  are  isolated,  specifically  they  cannot  access  each others memory.  Explain how this is implemented.
 
 ***Reference Solution:***
+
+$\checkmark$  ***This solution is proofread by Prof. Anton***
 
 Each process has its own page table. When reading from a virtual address, MMU will find physical address by reading this process's page table. The pages of other processes are not mapped to this process's page table, therefore, the physical address of other processes will never be the translate result of this process.
 
